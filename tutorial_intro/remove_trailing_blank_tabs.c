@@ -27,14 +27,14 @@ main()
 int trimline(char s[], int len)
 {
     int c;
-
+    // printf("%d", len);
     int start = 0;
     int end = len - 1;
     while(start < len && (s[start] == '\n' || s[start] == '\t' || s[start] == ' ')){
         ++start;
     }
 
-    while(end < len && (s[end] == '\n' || s[end] == '\t' || s[end] == ' ')){
+    while(end >= start && (s[end] == '\n' || s[end] == '\t' || s[end] == ' ')){
         --end;
     }
 

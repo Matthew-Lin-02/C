@@ -52,7 +52,7 @@ main()
     }
 
     for(int i = 0; i < max_count; i++){
-        for(int j = 1; j <= MAX_WORD_LEN + 1; j++)
+        for(int j = 1; j <= MAX_WORD_LEN; j++)
             printf("%3c", display2d[i][j]);
         putchar('\n');
     }

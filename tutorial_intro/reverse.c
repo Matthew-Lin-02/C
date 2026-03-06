@@ -2,8 +2,8 @@
 #define MAXLINE 1000
 /* maximum input line length */
 int kgetline(char line[], int maxline);
-int trimline(char s[], int len);
 void copy(char to[], char from[]);
+void reverse(char s[], int len);
 /* print the longest input line */
 main()
 {
@@ -13,41 +13,40 @@ main()
     /* maximum length seen so far */
     char line[MAXLINE];
     /* current input line */
-    char longest[MAXLINE]; /* longest line saved here */
     max = 0;
     while ((len = kgetline(line, MAXLINE)) > 0){
-        trimline(line, len);
+        reverse(line, len);
         printf("%s", line);
     }
-    if (max > 0) /* there was a line */
-        printf("%s", longest);
     return 0;
 }
 
-int trimline(char s[], int len)
-{
-    int c;
-
-    int start = 0;
+void reverse(char s[], int len){
+ 
     int end = len - 1;
-    while(start < len && (s[start] == '\n' || s[start] == '\t' || s[start] == ' ')){
-        ++start;
-    }
-
-    while(end < len && (s[end] == '\n' || s[end] == '\t' || s[end] == ' ')){
+    if(s[end] == '\n'){
         --end;
     }
 
-    int new_len = end - start + 1;
-
-
-    for(int i = 0; i < new_len; i++){
-        s[i] = s[start + i];
+    char c;
+    for(int i = 0; i < end/2; i++){
+        char c = s[end - i];  
+        s[end - i] = s[i];
+        s[i] = c;
     }
-    s[new_len] = '\0';
-    return new_len;
 
+    // This is a little more clear
+    // int start = 0
+    // while (start < end) {
+    //     char temp = s[start];
+    //     s[start] = s[end];
+    //     s[end] = temp;
+
+    //     start++;
+    //     end--;
+    // }
 }
+
 /* getline: read a line into s, return length */
 int kgetline(char s[], int lim)
 {
