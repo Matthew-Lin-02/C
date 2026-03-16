@@ -12,30 +12,42 @@ int main(void)
     char line[MAXLINE];
 
     while ((len = kgetline(line, MAXLINE)) > 0) {
-        int i = 0;
-        int j = 0;
-        int column = 0;
-        while(i < len){
-            // must iterate through regardless due to existence of tabs which would but the column in an odd position
-            int last_space_index = i;
-            while(i < len && column < FOLDCOLUMN){
-                if(line[i] == '\t'){
-                    column += calculate_spaces_to_tabstop(column, TABSTOP);   
-                }else{
-                    column +=1;
+
+        int i, j;
+        i = j = 0;
+        while(i<len){
+            int last_whitespace = -1;
+            j = i;
+
+            while(j < i + FOLDCOLUMN && j < len){
+                if(line[j] == ' '){
+                    last_whitespace = j;
                 }
-                ++i;
+                j++;
             }
 
-            int last_space = 0;
-                i+=1
-            int end = (len - start < FOLDCOLUMN) ? len - i : FOLDCOLUMN; //non inclusive
+        
 
-            start += FOLDCOLUMN;
+            int end_line = last_whitespace == -1 ? j : last_whitespace;
+
+            if (j < i + FOLDCOLUMN){
+                end_line = j;
+            }
+            
+            for(; i < end_line; i++){
+                putchar(line[i]);
+            }
+
+            putchar('\n');
+
+            if(last_whitespace != -1){
+                i++;   // skip the space we broke at
+            }
         }
-        printf("%s", line); 
+
+
+        
     }
-    return i;
 }
 
 int calculate_spaces_to_tabstop(int offset, int tab_size){
